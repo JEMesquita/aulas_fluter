@@ -1,6 +1,7 @@
 ﻿import 'package:flutter/material.dart';
 import '../database/db_helder.dart';
 import 'home_screen.dart';
+import 'register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   static const routeName = '/login';
@@ -135,11 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: 12),
                 TextButton(
                   onPressed: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Cadastro ainda não implementado.'),
-                      ),
-                    );
+                    Navigator.pushNamed(context, RegisterScreen.routeName);
                   },
                   child: const Text('Ainda não tem conta? Cadastre-se'),
                 ),

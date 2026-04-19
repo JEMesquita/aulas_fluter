@@ -63,6 +63,12 @@ class DBHelper {
     return User.fromMap(result.first);
   }
 
+  Future<List<User>> getAllUsers() async {
+    final db = await database;
+    final rows = await db.query('users');
+    return rows.map((row) => User.fromMap(row)).toList();
+  }
+
   Future<int> insertUser(User user) async {
     final db = await database;
     final data = user.toMap();
@@ -88,6 +94,44 @@ class DBHelper {
       'products',
       data,
       conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  Future<int> updateUser(User user) async {
+    final db = await database;
+    return await db.update(
+      'users',
+      user.toMap(),
+      where: 'id = ?',
+      whereArgs: [user.id],
+    );
+  }
+
+  Future<int> deleteUser(int id) async {
+    final db = await database;
+    return await db.delete(
+      'users',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
+  Future<int> updateProduct(Product product) async {
+    final db = await database;
+    return await db.update(
+      'products',
+      product.toMap(),
+      where: 'id = ?',
+      whereArgs: [product.id],
+    );
+  }
+
+  Future<int> deleteProduct(int id) async {
+    final db = await database;
+    return await db.delete(
+      'products',
+      where: 'id = ?',
+      whereArgs: [id],
     );
   }
 
