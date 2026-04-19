@@ -3,6 +3,8 @@ import '../database/db_helder.dart';
 import '../models/product.dart';
 import 'details_screen.dart';
 import 'login_screen.dart';
+import 'products_management_screen.dart';
+import 'users_management_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   static const routeName = '/home';
@@ -23,6 +25,48 @@ class HomeScreen extends StatelessWidget {
             },
           ),
         ],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 103, 58, 183),
+              ),
+              child: Text(
+                'Menu',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.shopping_bag),
+              title: const Text('Gerenciar Produtos'),
+              onTap: () {
+                Navigator.pushNamed(context, ProductsManagementScreen.routeName);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.people),
+              title: const Text('Gerenciar Usuários'),
+              onTap: () {
+                Navigator.pushNamed(context, UsersManagementScreen.routeName);
+              },
+            ),
+            const Divider(),
+            ListTile(
+              leading: const Icon(Icons.logout, color: Colors.red),
+              title: const Text('Sair'),
+              onTap: () {
+                Navigator.pushReplacementNamed(context, LoginScreen.routeName);
+              },
+            ),
+          ],
+        ),
       ),
       body: FutureBuilder<List<Product>>(
         future: DBHelper.instance.ensureSampleProducts().then((_) => DBHelper.instance.getProducts()),
